@@ -47,3 +47,12 @@ def import_or_install(package_name):
 		print('Installing package ' + package_name)
 		install_package(package_name)
 		rpack.importr(package_name)
+
+def import_or_install_github(package_name, repository_name):
+	import_or_install('devtools')
+	try:
+		rpack.importr(package_name)
+	except Exception as e:
+		print('Installing package ' + package_name + ' from Github repository ' + repository_name)
+		r.install_github(repository_name)
+		rpack.importr(package_name)

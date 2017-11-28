@@ -13,7 +13,22 @@ def test_gaussian_identity_glm():
 
 	model = GLM().fit(X_train, y_train)
 	pred = model.predict(X_valid)
+
 	print(metrics.mean_squared_error(y_valid, pred))
+	print(model.info_)
+
+def test_quasi_identity_glm():
+	data = datasets.load_diabetes()
+	X_train, X_valid, y_train, y_valid = model_selection.train_test_split(preprocessing.scale(data.data), data.target)
+
+	X_train = pd.DataFrame(X_train, columns=data.feature_names)
+	X_valid = pd.DataFrame(X_valid, columns=data.feature_names)
+
+	model = GLM(family='quasi', link='identity', variance='mu^3').fit(X_train, y_train)
+	pred = model.predict(X_valid)
+
+	print(metrics.mean_squared_error(y_valid, pred))
+	print(model.info_)
 
 def test_binomial_cloglog_glm():
 	data = datasets.load_breast_cancer()
@@ -24,8 +39,11 @@ def test_binomial_cloglog_glm():
 
 	model = GLM(family='binomial', link='cloglog').fit(X_train, y_train)
 	pred = model.predict(X_valid)
+
 	print(metrics.mean_squared_error(y_valid, pred))
+	print(model.info_)
 
 if __name__ == '__main__':
 	test_gaussian_identity_glm()
+	test_quasi_identity_glm()
 	test_binomial_cloglog_glm()

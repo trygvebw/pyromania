@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn import datasets, preprocessing, metrics, model_selection
-from ..models.rotation_forest import RotationForestClassifier
+from ..tree.rotation_forest import RotationForestClassifier
 
 def test():
 	data = datasets.load_breast_cancer()
